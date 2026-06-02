@@ -670,8 +670,13 @@ async function analyzeImages() {
   })
 });
 
-    const data = await response.json();
-    const text = data.content[0].text;
+   const data = await response.json();
+console.log('API response:', JSON.stringify(data));
+if (!data.content || !data.content[0]) {
+  throw new Error('APIレスポンス異常: ' + JSON.stringify(data));
+}
+const text = data.content[0].text;
+
     const clean = text.replace(/```json|```/g, '').trim();
     analysisResult = JSON.parse(clean);
 
